@@ -1,0 +1,118 @@
+{
+  "name": "projectclassmate",
+  "displayName": "ProjectClassmate",
+  "description": "\u9879\u76ee\u5b66\u4e60\u52a9\u624b \u2014 \u5206\u89e3\u9879\u76ee\u7ed3\u6784\uff0c\u6559\u5b66\u5f0f\u5206\u6790\u6280\u672f\u6808\uff0c\u5ef6\u7533\u5b66\u4e60\u8def\u5f84",
+  "version": "0.1.0",
+  "publisher": "ProjectClassmate",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "keywords": [
+    "learn",
+    "project",
+    "analysis",
+    "teaching",
+    "mentor"
+  ],
+  "activationEvents": [
+    "onCommand:projectclassmate.analyzeProject"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "projectclassmate.analyzeProject",
+        "title": "ProjectClassmate: \u5206\u6790\u9879\u76ee (Analyze Project)",
+        "category": "ProjectClassmate"
+      },
+      {
+        "command": "projectclassmate.setApiKey",
+        "title": "ProjectClassmate: \u8bbe\u7f6e API Key",
+        "category": "ProjectClassmate"
+      }
+    ],
+    "configuration": {
+      "title": "ProjectClassmate",
+      "properties": {
+        "projectclassmate.llm.provider": {
+          "type": "string",
+          "default": "openai",
+          "enum": [
+            "openai",
+            "anthropic",
+            "ollama",
+            "custom"
+          ],
+          "enumDescriptions": [
+            "OpenAI \u6216\u517c\u5bb9 API",
+            "Anthropic Claude",
+            "Ollama \u672c\u5730\u6a21\u578b",
+            "\u81ea\u5b9a\u4e49 OpenAI \u517c\u5bb9\u7aef\u70b9"
+          ],
+          "description": "LLM \u670d\u52a1\u63d0\u4f9b\u5546"
+        },
+        "projectclassmate.llm.model": {
+          "type": "string",
+          "default": "gpt-4o",
+          "description": "LLM \u6a21\u578b\u540d\u79f0"
+        },
+        "projectclassmate.llm.endpoint": {
+          "type": "string",
+          "default": "",
+          "description": "\u81ea\u5b9a\u4e49 API \u7aef\u70b9 (Ollama \u9ed8\u8ba4\u4e3a http://localhost:11434/v1)"
+        },
+        "projectclassmate.analysis.maxDepth": {
+          "type": "string",
+          "default": "module",
+          "enum": [
+            "module",
+            "function"
+          ],
+          "description": "\u5206\u6790\u6df1\u5ea6: module (\u6a21\u5757\u7ea7) \u6216 function (\u51fd\u6570\u7ea7)"
+        },
+        "projectclassmate.analysis.includeTests": {
+          "type": "boolean",
+          "default": true,
+          "description": "\u662f\u5426\u5206\u6790\u6d4b\u8bd5\u76ee\u5f55"
+        },
+        "projectclassmate.analysis.maxFileSize": {
+          "type": "number",
+          "default": 5000,
+          "description": "\u8df3\u8fc7\u8d85\u8fc7\u6b64\u884c\u6570\u7684\u6587\u4ef6 (AST \u8be6\u60c5)"
+        },
+        "projectclassmate.ui.language": {
+          "type": "string",
+          "default": "zh",
+          "enum": [
+            "zh",
+            "en"
+          ],
+          "description": "\u62a5\u544a\u8bed\u8a00"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile && npm run build:webview",
+    "compile": "tsc -p ./tsconfig.json",
+    "watch": "tsc -watch -p ./tsconfig.json",
+    "build:webview": "cd webview-ui && npm run build",
+    "dev:webview": "cd webview-ui && npm run dev",
+    "test": "node ./out/test/runTests.js",
+    "lint": "eslint src --ext .ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "1.85.0",
+    "@vscode/vsce": "^3.9.1",
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0"
+  }
+}
